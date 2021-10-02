@@ -5,3 +5,10 @@
 
 ## 과제 제출 과정
 * [과제 제출 방법](https://github.com/next-step/nextstep-docs/tree/master/precourse)
+
+
+## 기능 목록
+1. 숫자 입력
+2. 시스템 랜덤값 입력값 비교
+3. 스트라이크, 볼 구분
+4. 게임종료 여부
