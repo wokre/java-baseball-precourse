@@ -11,13 +11,7 @@ import java.util.Map;
  */
 public class BaseBallModel {
 
-    public void inputCheck(String input) {
-        convertToNumber(input);
-        String value = checkDuplicate(input);
-        if (value.length() < 3) throw new BaseBallException("서로 다른 세자리 수를 입력해 주세요.");
-    }
-
-    private void convertToNumber(String value) {
+    public void inputCheck(String value) {
         try {
             Integer.valueOf(value);
         }
@@ -26,11 +20,9 @@ public class BaseBallModel {
         }
     }
 
-    public Map<BaseBallResult, Integer> compare(String input) {
-        //TODO: 랜덤값과 입력값 비교
-        String randomNum = randomNumber();
+    public Map<BaseBallResult, Integer> compare(String input, String randomNum) {
         Map<BaseBallResult, Integer> map = new HashMap<>();
-        for (int i = 0; i < randomNum.length(); i++) {
+        for (int i = 0; i < input.length(); i++) {
             char input_char = input.charAt(i);          // 입력값 문자
             int idx = randomNum.indexOf(input_char);    // 랜덤값에 입력값 문자가 존재하는지 인덱스 출력
             judgement(map, idx, i);
@@ -59,24 +51,31 @@ public class BaseBallModel {
     }
 
     private String randomNumber() {
-        int random = Randoms.pickNumberInRange(111, 999);
+        int random = Randoms.pickNumberInRange(1, 9);
         String str_random = String.valueOf(random);
-        System.out.println("random : " + str_random);
-
-        String result = checkDuplicate(str_random);
-        if (result.length() < 3) {
-            System.out.println("recursive : " + str_random);
-            randomNumber();
-        }
-
-        return result;
+        return str_random;
     }
 
-    private String checkDuplicate(String str_random) {
-        String result = "";
-        for (int i = 0; i < str_random.length(); i++) {
-            if (str_random.indexOf(str_random.charAt(i)) == i) result += str_random.charAt(i);
+    /**
+     * 종료
+     * @return
+     */
+    public String finish(Map<BaseBallResult, Integer> result, int strikeCnt, int ballCnt) {
+        if (result.isEmpty()) return BaseBallResult.NOTHING.getValue();
+        if (strikeCnt >= 3) return "3스트라이크 \n3개의 숫자를 모두 맞히셨습니다! 게임 끝";
+
+        StringBuilder sb = new StringBuilder();
+        if (strikeCnt > 0) sb.append(strikeCnt).append(BaseBallResult.STRIKE.getValue()).append(" ");
+        if (ballCnt > 0) sb.append(ballCnt).append(BaseBallResult.BALL.getValue()).append(" ");
+
+        return sb.toString();
+    }
+
+    public String getRandomNumber() {
+        String randomNum = "";
+        for (int i = 0; i < 3; i++) {
+            randomNum += randomNumber();
         }
-        return result;
+        return randomNum;
     }
 }

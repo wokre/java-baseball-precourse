@@ -4,7 +4,7 @@ package baseball;
  * Created By bohyun on 2021/10/01
  */
 public enum BaseBallResult {
-    NOTHING("Nothing"),
+    NOTHING("낫싱"),
     BALL("볼"),
     STRIKE("스트라이크"),
     PASS("");
